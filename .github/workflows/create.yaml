@@ -1,20 +1,22 @@
-name: create runner # workflow name
+name: create runner
+
 on: workflow_dispatch
-jobs: 
+
+jobs:
   create-runner:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4          # v6 doesn't exist, latest is v4
 
       - name: list files
         run: ls -l
-      # installs latest terraform in the runner
+
       - name: setup terraform
         uses: hashicorp/setup-terraform@v3
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v6.1.0
+        uses: aws-actions/configure-aws-credentials@v4   # v6.1.0 doesn't exist, latest is v4
         with:
           aws-region: us-east-1
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -26,5 +28,5 @@ jobs:
       - name: terraform plan
         run: terraform plan
 
-      - name: terraform approve
+      - name: terraform apply
         run: terraform apply -auto-approve
